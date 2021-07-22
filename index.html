@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Getting Started with JavaScript</title>
+    <style>
+        body{
+            padding: 30px;
+            background-color:deepskyblue;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .content{
+            padding: 40px;
+            margin:40px;
+            text-align: center;
+            background-color:gainsboro;
+            border-radius: 5px;
+        }
+
+        .timer{
+            font-size: 120px;
+        }
+
+        .start{
+            border:none;
+            padding: 12px;
+            background-color:limegreen;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .stop{
+            border:none;
+            padding: 12px;
+            background-color:coral;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        /* #20c997 */
+
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- timer -->
+        <div class="timer">
+            <span class="minutes">00</span> : <span class="seconds">00</span>
+        </div>
+        <!-- timer buttons -->
+        <button class="start" data-action="startbtn">
+            Start
+        </button>
+        <button class="stop" data-action="stopbtn">
+            Stop
+        </button>
+        <button class="btn btn-link btn-block resets" data-action="reset">
+            Reset
+        </button>
+
+    </div>
+
+
+
+    <!-- 🔥🔥🔥🔥 JavaScript 🔥🔥🔥🔥 -->
+    <script>
+    const startButton = document.querySelector('[data-action="startbtn"]');
+    const stopButton  = document.querySelector('[data-action="stopbtn"]');
+    const resetButton = document.querySelector('[data-action="reset"]');
+    const minutes     = document.querySelector('.minutes');
+    const seconds     = document.querySelector('.seconds');
+
+    let timerTime = 00;
+    let isRunning = false;
+    let interval;
+
+    function startTimer(){
+        if(isRunning) return;
+        isRunning = true;
+        interval = setInterval(incrementTimer, 1000);
+    }
+
+    function stopTimer(){
+        if(!isRunning) return;
+        isRunning = false;
+        clearInterval(interval);
+    }
+
+    function resetTimer(){
+        stopTimer();
+        timerTime = 0;
+        minutes.innerText = '00';
+        seconds.innerText = '00';
+    }
+
+    function incrementTimer(){
+        timerTime++;
+
+        const numOfMins    = Math.floor(timerTime / 60);
+        const numOfSecs    = timerTime % 60;
+
+        minutes.innerText = pad(numOfMins);
+        seconds.innerText = pad(numOfSecs);
+    }
+
+    function pad(number){
+        return (number < 10) ? '0'+ number : number;
+    }
+
+    startButton.addEventListener('click', startTimer);
+    stopButton.addEventListener('click', stopTimer);
+    resetButton.addEventListener('click', resetTimer);
+    </script>
+</body>
+</html>
